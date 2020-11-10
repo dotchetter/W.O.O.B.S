@@ -6,8 +6,11 @@
 #define INTERVAL 10000
 
 
+#define durationSleep  10             // secondes to deep-sleep
+
 static char *ssid = "AndroidAP";
-static char *pass = "52105210";
+static char *pass = "52105210"; 
+
 
 // Pin layout configuration
 
