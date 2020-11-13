@@ -11,3 +11,15 @@
  *
  * Written on 2020-11-10, Simon Olofsson
  */
+
+
+E201C::E201C(float deviationOffset, float referenceVoltage, 
+             float sensorMaxValue, float phRef1, float phRef2)
+{
+    this->deviationOffset = deviationOffset;
+    this->referenceVoltage = referenceVoltage;
+    this->sensorMaxValue = sensorMaxValue;
+    this->phRef1 = phRef1;
+    this->phRef2 = phRef2;
+    this->kValue = this->GetKValue();
+}
