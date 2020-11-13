@@ -30,3 +30,6 @@ int main(void)
 #define THERM_CMD_MATCHROM 0x55
 #define THERM_CMD_SKIPROM 0xcc
 #define THERM_CMD_ALARMSEARCH 0xec
+#define F_CPU 48000000UL //Your clock speed in Hz (3Mhz here)   ÄNDRA ANTAR JAG
+#define LOOP_CYCLES 8 //Number of cycles that the loop takes
+#define us(num) (num/(LOOP_CYCLES*(1/(F_CPU/1000000.0))))
