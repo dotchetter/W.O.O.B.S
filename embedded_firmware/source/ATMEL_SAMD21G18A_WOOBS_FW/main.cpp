@@ -43,3 +43,5 @@ int main(void)
 
 #define THERM_LOW() PORT->Group[0].OUTCLR.reg = THERM_PIN //PORT->Group[0].OUTCLR.reg     //THERM_PORT&=~(1<<THERM_DQ)
 #define THERM_HIGH() PORT->Group[0].OUTSET.reg = THERM_PIN //PORT->Group[0].OUTSET.reg     //THERM_PORT|=(1<<THERM_DQ)
+inline __attribute__((gnu_inline)) void therm_delay(uint16_t delay){
+while(delay--) asm volatile("nop");
