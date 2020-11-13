@@ -45,3 +45,60 @@ int main(void)
 #define THERM_HIGH() PORT->Group[0].OUTSET.reg = THERM_PIN //PORT->Group[0].OUTSET.reg     //THERM_PORT|=(1<<THERM_DQ)
 inline __attribute__((gnu_inline)) void therm_delay(uint16_t delay){
 while(delay--) asm volatile("nop");
+uint8_t therm_reset(){
+	uint8_t i;
+	//Pull line low and wait for 480uS
+	THERM_LOW();
+	THERM_OUTPUT_MODE();
+	therm_delay(us(480));
+	//Release line and wait for 60uS
+	THERM_INPUT_MODE();
+	therm_delay(us(60));
+	//Store line value and wait until the completion of 480uS period
+	i = PORT->Group[0].IN.reg & THERM_PIN; //osäker          //(THERM_PIN & (1<<THERM_DQ));
+	therm_delay(us(420));
+	//Return the value read from the presence pulse (0=OK, 1=WRONG)
+	return i;
+}
+
+void therm_write_bit(uint8_t bit){
+	//Pull line low for 1uS
+	THERM_LOW();
+	THERM_OUTPUT_MODE();
+	therm_delay(us(1));
+	//If we want to write 1, release the line (if not will keep low)
+	if(bit) THERM_INPUT_MODE();
+	//Wait for 60uS and release the line
+	therm_delay(us(60));
+	THERM_INPUT_MODE();
+}uint8_t therm_read_bit(void){
+	uint8_t bit=0;
+	//Pull line low for 1uS
+	THERM_LOW();
+	THERM_OUTPUT_MODE();
+	therm_delay(us(1));
+	//Release line and wait for 14uS
+	THERM_INPUT_MODE();
+	therm_delay(us(14));
+	//Read line value
+	if (PORT->Group[0].IN.reg & THERM_PIN) bit=1; //((PORT->Group[0].IN.reg & PORT_PA16)== 1)  //(THERM_PIN&(1<<THERM_DQ)) 
+	//Wait for 45uS to end and return read value
+	therm_delay(us(45));
+	return bit;
+}uint8_t therm_read_byte(void){
+	uint8_t i=8, n=0;
+	while(i--){
+		//Shift one position right and store read value
+		n>>=1;
+		n|=(therm_read_bit()<<7);
+	}
+	return n;
+}
+void therm_write_byte(uint8_t byte){
+	uint8_t i=8;
+	while(i--){
+		//Write actual bit and shift one position right to make the next bit ready
+		therm_write_bit(byte&1);
+		byte>>=1;
+	}
+}
