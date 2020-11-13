@@ -23,3 +23,12 @@ E201C::E201C(float deviationOffset, float referenceVoltage,
     this->phRef2 = phRef2;
     this->kValue = this->GetKValue();
 }
+
+
+E201C::GetKValue()
+/*
+* Returns the K value based on set parameter for the sensor.
+*/
+{
+    return ((float)this->phRef2 - this->phRef1) / ((float)this->V2Value - this->V1Value);
+}
