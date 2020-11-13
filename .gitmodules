@@ -1,3 +1,0 @@
-[submodule "embedded_firmware/source/include/StateMachineEmbedded"]
-	path = embedded_firmware/source/include/StateMachineEmbedded
-	url = https://github.com/dotchetter/StateMachineEmbedded.git
