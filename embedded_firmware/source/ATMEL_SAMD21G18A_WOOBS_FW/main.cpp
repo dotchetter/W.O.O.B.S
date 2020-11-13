@@ -102,3 +102,44 @@ void therm_write_byte(uint8_t byte){
 		byte>>=1;
 	}
 }
+#define THERM_DECIMAL_STEPS_12BIT 625 //.0625
+void therm_read_temperature(char *buffer){
+	// Buffer length must be at least 12bytes long! ["+XXX.XXXX C"]
+	uint8_t temperature[2];
+	int8_t digit;
+	uint16_t decimal;
+	//Reset, skip ROM and start temperature conversion
+	therm_reset();
+	therm_write_byte(THERM_CMD_SKIPROM);
+	therm_write_byte(THERM_CMD_CONVERTTEMP);
+	//Wait until conversion is complete
+	while(!therm_read_bit());
+	//Reset, skip ROM and send command to read Scratchpad
+	therm_reset();
+	therm_write_byte(THERM_CMD_SKIPROM);
+	therm_write_byte(THERM_CMD_RSCRATCHPAD);
+	//Read Scratchpad (only 2 first bytes)
+	temperature[0]=therm_read_byte();
+	temperature[1]=therm_read_byte();
+	therm_reset();
+	//Store temperature integer digits and decimal digits
+	digit=temperature[0]>>4;
+	digit|=(temperature[1]&0x7)<<4;
+	//Store decimal digits
+	decimal=temperature[0]&0xf;
+	decimal*=THERM_DECIMAL_STEPS_12BIT;
+	//Format temperature into a string [+XXX.XXXX C]
+	//sprintf(buffer, "%+d.%04u C", digit, decimal);
+}
+int main(void)
+{
+	char buffer[100];
+    /* Initialize the SAM system */
+    SystemInit();
+
+    /* Replace with your application code */
+    while (1) 
+    {
+		therm_read_temperature(buffer);
+    }
+}
