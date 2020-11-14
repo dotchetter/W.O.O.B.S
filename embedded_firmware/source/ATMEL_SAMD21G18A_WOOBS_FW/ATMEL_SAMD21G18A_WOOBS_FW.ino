@@ -1,31 +1,26 @@
-#include "include/adc.h" 
+//#include "include/adc.h" 
+#include "E201CBlue.h"
+#include "SAMD21_ADC.h"
+#include "definitions.h"
 #include <StateMachine.h>
 
 
-void init_adc()
-/*
-* Initialize the analog-digital converter
-*/
+// Heap allocated globally accessible instances (Singletons)
+E201C *phsensor = new E201C(REF_VOLTAGE, ADC_MAX_VAL_REF, PH_REF_1, PH_REF_2, PH_SENSOR_CHANNEL);
+
+
+void setup() 
 {
-    // Enable ADC
-    ADC->CTRLA.reg = ADC_CTRLA_ENABLE;
-
-    // Set the ADC as 10 bit resolution register (0 -> 1023)
-    ADC->CTRLB.bit.RESSEL = ADC_CTRLB_RESSEL_10BIT_Val;
+    init_adc();
+    Serial.begin(115200);
 }
 
+void loop() 
+{
+    Serial.print("PH: ");
+    Serial.println(phsensor->GetSensorPH());
 
-
-
-
-
-
-void setup() {
-    // put your setup code here, to run once:
-
-}
-
-void loop() {
-    // put your main code here, to run repeatedly:
-
+    Serial.print("Voltage: ");
+    Serial.println(phsensor->GetSensorVoltage());
+    delay(1000);
 }
