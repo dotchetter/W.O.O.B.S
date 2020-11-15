@@ -1,11 +1,32 @@
 
+#include "app.h"
+#include "clock.h"
+
+#define F_CPU 48000000UL
+#include "delay.h"
+
+#include "sleep.h"
+#include "sam.h"
+
+
 void setup() {
     Serial.begin(9600);
 
-    delay(7000); //delay so we can see normal current draw
-
-  
-    delay(1000); 
+    // Set the drive strength to strong
+    PORT->Group[LED0_PORT].PINCFG[LED0_PIN_NUMBER].bit.DRVSTR = 1;
+        
+    // Turn the LED on PA17 ON
+    REG_PORT_OUTSET0 = LED0_PIN_MASK;
+        
+    // Errata: Make sure that the Flash does not power all the way down when in sleep mode. 
+    NVMCTRL->CTRLB.bit.SLEEPPRM = NVMCTRL_CTRLB_SLEEPPRM_DISABLED_Val;
+    
+    // Wait 5 seconds
+    delay_ms(5000);
+    
+    // Sleep
+    StandbySleep();
+    
   
 }
 
@@ -14,19 +35,6 @@ void loop() {
     Serial.begin(9600);
     Serial.println("vaknade precis loop");
     // Due to a hardware bug on the SAMD21, the SysTick interrupts become active before the flash has powered up from sleep, causing a hard fault
-    // To prevent this the SysTick interrupts are disabled before entering sleep mode           
-    SysTick->CTRL &= ~SysTick_CTRL_TICKINT_Msk;// Disable SysTick interrupts
-    // __WFI();                                              // Put the SAMD21 into deep sleep, Zzzzzzzz... 
-    SysTick->CTRL |= SysTick_CTRL_TICKINT_Msk;
+
  
-}
-
-void RTC_Handler(void)
-{
-    if (RTC->MODE1.INTFLAG.bit.OVF && RTC->MODE1.INTENSET.bit.OVF) {  // Check if an overflow caused the interrupt
-
-     PORT->Group[PORTA].OUTTGL.reg = PORT_PA21;   
-
-     RTC->MODE1.INTFLAG.bit.OVF = 1;                                  // Reset the overflow interrupt flag
-    }
 }
