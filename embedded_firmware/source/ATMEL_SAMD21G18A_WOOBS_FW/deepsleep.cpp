@@ -1,3 +1,4 @@
+#include "deepsleep.h"
 void StandbySleep(void)
 {
 	// Disable interrupts

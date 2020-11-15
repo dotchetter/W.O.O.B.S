@@ -1,11 +1,11 @@
 
-#include "clock.h"
-
+//#include "clock.h"
+#include "sam.h"
 #define F_CPU 48000000UL
 #include "delay.h"
 #include "definitions.h"
 #include "deepsleep.h"
-#include "sam.h"
+
 
 
 void setup() {
