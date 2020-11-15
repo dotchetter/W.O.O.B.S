@@ -1,3 +1,9 @@
+ 
+
+
+void deepsleep()
+{
+
   PORT->Group[PORTA].DIRSET.reg = PORT_PA21;  // Output to D7 to check that the ISR is being called every 60 seconds
 
     // Configure the external crystal----------------------------------------------
@@ -52,3 +58,4 @@
     // Enable RTC--------------------------------------------------------------
     RTC->MODE1.CTRL.bit.ENABLE = 1;                       // Enable the RTC
     while (RTC->MODE1.STATUS.bit.SYNCBUSY);               // Wait for synchronization
+}
