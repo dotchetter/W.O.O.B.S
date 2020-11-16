@@ -67,11 +67,6 @@ Buy us a coffee? https://www.buymeacoffee.com/dotchetter
           D6        PA20        0
 */
 
-class DS12B20
-{
-private:
-    uint8_t directionRegisterMask;
-    uint8_t microControllerPort;
 
 /* 
 * DSB18B20 Commands in hex form. See datasheet pg 11
