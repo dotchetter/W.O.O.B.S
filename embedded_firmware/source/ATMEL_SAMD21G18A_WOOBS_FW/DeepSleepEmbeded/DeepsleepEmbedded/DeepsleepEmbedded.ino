@@ -4,8 +4,6 @@
 
 int TimeToSleepSec = 8;
 
-
-
 void setup() {
   while(!SerialUSB);
   PORT->Group[PORTA].DIRSET.reg = PORT_PA21; // Pin output PIN 7 on MRK1010
@@ -17,10 +15,7 @@ void setup() {
 void loop() {
   SerialUSB.println("SLEEPING ZZZzzzzzzZzz");
   USBDevice.detach();
-  // put your main code here, to run repeatedly:
-    // Due to a hardware bug on the SAMD21, the SysTick interrupts become active before the flash has powered up from sleep, causing a hard fault
-  // To prevent this the SysTick interrupts are disabled before entering sleep mode
-  deepsleep();
+  deepsleep(); // Put it into sleepmode
   USBDevice.attach();
   delay(1000);
   while(!SerialUSB);
