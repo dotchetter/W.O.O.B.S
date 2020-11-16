@@ -23,3 +23,7 @@ DS18B20::DS18B20(uint8_t portGroup, uint32_t pinMask)
     this->pinMask = pinMask;
     this->portGroup = portGroup;
 }
+
+
+DS18B20::~DS18B20(){}
+
