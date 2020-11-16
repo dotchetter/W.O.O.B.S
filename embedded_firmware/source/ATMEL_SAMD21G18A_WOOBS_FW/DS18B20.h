@@ -93,10 +93,22 @@ Buy us a coffee? https://www.buymeacoffee.com/dotchetter
 * accounted for. These defined describe these periods.
 */
 
-};
+#define TIME_SLOT_US 60
+#define RECOVERY_US 1
+#define WRITE_1_LOW_US 60
+#define WRITE_0_LOW_US 1
+#define RESET_US 480
+#define PRECEDENCE_DETECT_HIGH_US 15
+#define PRECEDENCE_DETECT_LOW_US 60
+#define CONVERSION_TIME_US 750
 
+/* Bitmasks */
+#define READING_MSB_MASK 0x07
 
-
+/* Constants */
+#define FRACTION_LSB 4
+#define FRACTION_CALC_BASE -2.0f
+#define FRACTION_CALC_EXP -4.0f
 
 /*
 
