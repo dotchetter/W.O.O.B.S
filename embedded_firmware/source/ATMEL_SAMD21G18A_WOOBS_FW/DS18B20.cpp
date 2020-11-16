@@ -27,3 +27,13 @@ DS18B20::DS18B20(uint8_t portGroup, uint32_t pinMask)
 
 DS18B20::~DS18B20(){}
 
+
+uint64_t DS18B20::_us_to_cycles(uint32_t us)
+/*
+* Convert microseconds to cpu cycles
+*/
+{
+    uint64_t cycles_per_us = F_CPU / 10000000;
+    return (uint64_t)(us) * cycles_per_us;
+}
+
