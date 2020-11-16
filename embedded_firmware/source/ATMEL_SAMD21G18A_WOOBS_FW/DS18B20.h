@@ -14,7 +14,18 @@
  *
  * Written on 2020-11-13, Simon Olofsson
  */
+
 #include "include/port.h"
+#include "Arduino.h"
+#include "math.h"
+#include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef DS12B20_H_
+#define DS12B20_H_
 
 /*
 
