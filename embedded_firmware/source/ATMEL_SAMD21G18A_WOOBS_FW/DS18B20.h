@@ -110,8 +110,54 @@ Buy us a coffee? https://www.buymeacoffee.com/dotchetter
 #define FRACTION_CALC_BASE -2.0f
 #define FRACTION_CALC_EXP -4.0f
 
+
+class DS18B20
+{
 /*
-
-    
-
+* Instantiate this class for each E201C sensor
+* attached to the device. 
+*
+* FIELD: pinMask:          pinMask refers to the port (UL)
+*                          that the microcontroller associates
+*                          with the given pin the sensor is connected
+*                          to. To find this, look at the table above.
+*
+* METHOD: _us_to_cycles:   Convert microseconds to cpu cycles
+*
+* METHOD: SetAsInput:      Configure the pin where the sensor is
+*                          plugged in as input - a part of the
+*                          means of communication over onewire.
+*
+* METHOD: SetAsOutput:     Configure the pin where the sensor is
+*                          plugged in as output - a part of the
+*                          means of communication over onewire.
+*
+* METHOD: BusWrite:        Write a 1 (HIGH) or 0 (LOW)to the bus 
+*                          where the device is connected.
+*
+* METHOD BusRead:          Read from the bus where the device
+*                          is connected.
+*
+* METHOD: InitCommand:     Selecting the pin as output and writing a LOW
+*                          will let the sensor know there is an upcoming
+*                          transition of command(s).
+*
+* METHOD: SuspendMicroSeconds: Allows the caller to return n cycles to sleep for
+*                              desired amount of microseconds.
+*
+* METHOD: SendResetCommand:  Resets the sensor device by sensing the initial
+*                            command, then switching on the line as input
+*
+* METHOD: SendByteCommand:  Send a command to the sensor. 
+*                           The commands for the DS18B20 are bytes
+*                           where each bit is part of an instruction.
+*                           This method sends one bit at a time, where
+*                           inbetween, the application must be suspended for
+*                           a defined amount of microseconds for the sensor
+*                           to process the command.
+*
+* METHOD: ReadScratchPad:   Read one byte of data from the sensor.
+*                           The size of a byte is iterated over, and
+*                           ultimately concatenates a byte from the 
+*                           sensor received over one wire.
 */
