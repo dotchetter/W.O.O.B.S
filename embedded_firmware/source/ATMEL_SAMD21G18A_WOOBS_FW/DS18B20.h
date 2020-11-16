@@ -161,3 +161,28 @@ class DS18B20
 *                           ultimately concatenates a byte from the 
 *                           sensor received over one wire.
 */
+private:
+    uint32_t pinMask;
+    uint8_t portGroup;
+    uint64_t _us_to_cycles(uint32_t us);
+    void SetAsInput();
+    void SetAsOutput();
+    void BusWrite(uint8_t mode);
+    uint32_t BusRead();
+    void InitCommand();
+    void SuspendMicroSeconds(uint32_t microSeconds);
+    void SendResetCommand();
+    void SendByteCommand(uint8_t command);
+    uint8_t ReadScratchPad();
+
+public:
+    DS18B20(uint8_t portGroup, uint32_t pinMask);
+    ~DS18B20();
+    float GetTemperature(const char unit);
+};
+
+
+#endif // DS12B20_H_
+#ifdef __cplusplus
+}
+#endif // __cplusplus}
