@@ -73,8 +73,30 @@ private:
     uint8_t directionRegisterMask;
     uint8_t microControllerPort;
 
+/* 
+* DSB18B20 Commands in hex form. See datasheet pg 11
+* https://datasheets.maximintegrated.com/en/ds/DS18B20.pdf
+*/
 
-public:
+#define READ_ROM_CMD 0x33
+#define MATCH_ROM_CMD 0x55
+#define SKIP_ROM_CMD 0xCC
+#define ALARM_SRCH_CMD 0xEC
+#define CPY_SCRTC_PD_CMD 0x48
+#define RECALL_E2_CMD 0xB8
+#define SRCH_ROM_CMD 0xF0
+#define CONVERT_CMD 0x44
+#define WRITE_SCRTC_PD_CMD 0x4E
+#define READ_SCRTC_PD_CMD 0xBE
+#define READ_PW_SUPPL_CMD 0xB4
+#define NUM_SCRATCHPAD_BYTES 0x09
+#define BITS_IN_BYTE 8
+
+/* 
+* Data processing is handled on-chip of the sensor.
+* According to the datasheet, this time needs to be
+* accounted for. These defined describe these periods.
+*/
 
 };
 
