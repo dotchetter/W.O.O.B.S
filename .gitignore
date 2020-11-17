@@ -9,8 +9,10 @@
 embedded_firmware\source\ATMEL_SAMD21G18A_WOOBS_FW\Debug\*
 embedded_firmware\source\ATMEL_SAMD21G18A_WOOBS_FW\*.componentinfo*
 
-# Ignore python virtual env
+# Ignore python various
 venv
+restapi/restapi/__pycache__
+restapi/db.sqlite3
 
 # Ignore private files
 restapi/restapi/settings.py
