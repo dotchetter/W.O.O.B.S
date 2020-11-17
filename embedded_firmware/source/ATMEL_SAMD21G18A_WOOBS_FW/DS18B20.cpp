@@ -67,5 +67,8 @@ void DS18B20::SetAsOutput()
     }
 }
 
+
+void DS18B20::BusWrite(uint8_t mode)
+/*
 * Write a 1 (HIGH) or 0 (LOW)to the bus 
 * where the device is connected.
