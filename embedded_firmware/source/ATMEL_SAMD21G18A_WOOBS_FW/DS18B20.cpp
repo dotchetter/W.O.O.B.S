@@ -67,3 +67,5 @@ void DS18B20::SetAsOutput()
     }
 }
 
+* Write a 1 (HIGH) or 0 (LOW)to the bus 
+* where the device is connected.
