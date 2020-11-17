@@ -72,3 +72,21 @@ void DS18B20::BusWrite(uint8_t mode)
 /*
 * Write a 1 (HIGH) or 0 (LOW)to the bus 
 * where the device is connected.
+*/
+{
+    switch (mode)
+    {
+        case 0:
+            switch(this->portGroup)
+            {
+                case 0: REG_PORT_OUTCLR0 = this->pinMask; break;
+                case 1: REG_PORT_OUTSET0 = this->pinMask; break;
+            }
+        case 1:
+            switch(this->portGroup)
+            {
+                case 0: REG_PORT_OUTCLR1 = this->pinMask; break;
+                case 1: REG_PORT_OUTSET1 = this->pinMask; break;
+            }
+    }
+}
