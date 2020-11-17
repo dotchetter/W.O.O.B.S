@@ -37,3 +37,18 @@ uint64_t DS18B20::_us_to_cycles(uint32_t us)
     return (uint64_t)(us) * cycles_per_us;
 }
 
+
+void DS18B20::SetAsInput()
+/*
+* Configure the pin where the sensor is
+* plugged in as input - a part of the
+* means of communication over onewire.
+*/
+{
+    switch(this->portGroup)
+    {
+        case 0: REG_PORT_DIRCLR0 = this->pinMask; break;
+        case 1: REG_PORT_DIRCLR1 = this->pinMask; break;
+    }
+}
+
