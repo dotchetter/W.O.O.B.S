@@ -104,3 +104,16 @@ uint32_t DS18B20::BusRead()
         case 1: return REG_PORT_IN1 & this->pinMask; break;
     }
 }
+
+
+void DS18B20::InitCommand()
+/*
+* Selecting the pin as output and writing a LOW
+* will let the sensor know there is an upcoming
+* transition of command(s).
+*/
+{
+    this->SetAsOutput();
+    this->BusWrite(0);
+}
+
