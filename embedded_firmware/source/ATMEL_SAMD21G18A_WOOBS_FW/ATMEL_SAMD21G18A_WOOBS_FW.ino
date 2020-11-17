@@ -1,4 +1,3 @@
-//#include "include/adc.h" 
 #include "E201CBlue.h"
 #include "SAMD21_ADC.h"
 #include "definitions.h"
