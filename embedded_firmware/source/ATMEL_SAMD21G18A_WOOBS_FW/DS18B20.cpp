@@ -206,3 +206,92 @@ uint8_t DS18B20::ReadScratchPad()
     }
     return result;
 }
+
+
+float DS18B20::GetTemperature(const char unit)
+/*
+* Initiate communcation with the DSB18B20, 
+* and request values. 
+* The conversion is done on-sensor, which is 
+* why the seemingly long delay is needed 
+* after the CONVERT_CMD is sent to the sensor.
+*
+* When the READ_SCRTC_PD_CMD command is issued
+* to the device, telling it we want to read the
+* values that it has converted, it will hold
+* 9 bytes in memory where the two least significant
+* bytes of 9 hold the temperature temperature (LSB and MSB)
+* (Figure 7, DSB18B20 datasheet)
+*/
+{
+    float fahrenheit, celcius;
+
+    uint8_t readBytes[NUM_SCRATCHPAD_BYTES];
+    uint8_t LSB, MSB, TEMP_HIGH, TEMP_LOW;
+
+    /* Reset the sensor, tell it to skip ROM, and start conversion */ 
+    this->SendResetCommand();
+    this->SendByteCommand(SKIP_ROM_CMD);
+    this->SendByteCommand(CONVERT_CMD);
+
+    /* Allow the conversion to finish by waiting */
+    this->SuspendMicroSeconds(CONVERSION_TIME_US);
+
+    /* Reset once more, skip ROM and read the values it converted */
+    this->SendResetCommand();
+    this->SendByteCommand(SKIP_ROM_CMD);
+
+    /* Send command telling that we want to read the scratch pad */
+    this->SendByteCommand(READ_SCRTC_PD_CMD);
+
+    /* Read the temperature values in scratch pad on the device */
+    for (int i = 0; i < NUM_SCRATCHPAD_BYTES; i++)
+    {
+        readBytes[i] = ReadScratchPad();
+    }
+
+    /* Verify that the temperature read is positive, otherwise return 0.0 */
+    LSB = readBytes[0];
+    MSB = readBytes[1];
+    TEMP_HIGH = readBytes[2];
+    TEMP_LOW = readBytes[3];
+    
+    /* Negative values are ignored - verify this by masking the leftmost bit */
+    if (MSB & (1 << READING_MSB_MASK)) 
+    {
+        return 0.0f;
+    }
+
+    /* 
+    * The celcus value is divided in to two parts - LSB and MSB. 
+    * To isolate these values from these bytes, they are masked and
+    * added together.
+    * The temperature is provided in fractions with LSB and MSB. 
+    * On top of this, they are provided in base-2. To isolate the
+    * fractions from the sensor (ls 4 bits in LSB) they are stored
+    * by using the power of negative 4, since the lowest of the 4 
+    * fraction bits is 0.0625.
+    */
+    for (int i = 0; i < FRACTION_LSB; i++)
+    {
+        if(!(LSB & (1 << i)))
+        {
+            celcius = celcius + pow(FRACTION_CALC_BASE, FRACTION_CALC_EXP + i);
+        }
+    }
+
+    /* 
+    * Complement the Celcius value with the integer part of the 
+    * byte - the upper 4 bits in base 2.
+    */
+    celcius += (LSB >> FRACTION_LSB) + ((READING_MSB_MASK & MSB) << FRACTION_LSB);
+    fahrenheit = celcius * 9.0 / 5.0 + 32;
+
+    switch (unit)
+    {
+        case 'C': return celcius; break;
+        case 'c': return celcius; break;
+        case 'F': return fahrenheit; break;
+        case 'f': return fahrenheit; break;
+    }
+}
