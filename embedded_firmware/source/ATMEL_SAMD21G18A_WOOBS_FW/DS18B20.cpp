@@ -139,3 +139,37 @@ void DS18B20::SendResetCommand()
     this->SetAsInput();    
     this->SuspendMicroSeconds(RESET_US);
 }
+
+
+void DS18B20::SendByteCommand(uint8_t command)
+/*
+* Send a command to the sensor. 
+* The commands for the DS18B20 are bytes
+* where each bit is part of an instruction.
+* This method sends one bit at a time, where
+* inbetween, the application must be suspended for
+* a defined amount of microseconds for the sensor
+* to process the command.
+*/
+{
+    /* Iterate over the byte-sized command and send instruction */
+    for (int i = 0; i < BITS_IN_BYTE; i++)
+    {
+        this->InitCommand();
+        /* The bit is 1 - go HIGH and wait for the time slot of 60us */
+        if  ((command >> i) & 1U)
+        {
+            /* The current part of command is 1 - engage pull-up resistor and await */
+            this->SuspendMicroSeconds(WRITE_0_LOW_US);
+            this->SetAsInput();
+            this->SuspendMicroSeconds(WRITE_1_LOW_US);
+        }
+        /* The bit is 0 - go LOW and wait for the time slot of 60us */
+        else
+        {
+            this->SuspendMicroSeconds(WRITE_1_LOW_US);
+            this->SetAsInput();
+            this->SuspendMicroSeconds(WRITE_0_LOW_US);
+        }
+    }    
+}
