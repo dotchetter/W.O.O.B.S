@@ -1,4 +1,16 @@
+
+# Atmel studio metadata
 .vs
+
+#Pycharm
+.idea
+
+# Ignore buildfiles
 embedded_firmware\source\ATMEL_SAMD21G18A_WOOBS_FW\Debug\*
 embedded_firmware\source\ATMEL_SAMD21G18A_WOOBS_FW\*.componentinfo*
 
+# Ignore python virtual env
+venv
+
+# Ignore private files
+restapi/restapi/settings.py
