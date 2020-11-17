@@ -90,3 +90,17 @@ void DS18B20::BusWrite(uint8_t mode)
             }
     }
 }
+
+
+uint32_t DS18B20::BusRead()
+/*
+* Read from the bus where the device
+* is connected.
+*/
+{
+    switch(this->portGroup)
+    {
+        case 0: return REG_PORT_IN0 & this->pinMask; break;
+        case 1: return REG_PORT_IN1 & this->pinMask; break;
+    }
+}
