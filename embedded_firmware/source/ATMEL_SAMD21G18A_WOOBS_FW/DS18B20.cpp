@@ -126,3 +126,16 @@ void DS18B20::SuspendMicroSeconds(uint32_t microSeconds)
 {
     for (uint64_t i = 0; i < this->_us_to_cycles(microSeconds); i++) {asm("nop");}
 }
+
+
+void DS18B20::SendResetCommand()
+/*
+* Resets the sensor device by sensing the initial
+* command, then switching on the line as input
+*/
+{
+    this->InitCommand();
+    this->SuspendMicroSeconds(RESET_US);
+    this->SetAsInput();    
+    this->SuspendMicroSeconds(RESET_US);
+}
