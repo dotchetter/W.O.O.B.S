@@ -1,5 +1,4 @@
-# W.O.O.B.S
-Water Oberservation Omtizing Boyant System
+W.O.O.B.S - Water Oberservation Omtizing Boyant System
 
 #### What is it?
 This is a product in a college collag designed to collect data about a
