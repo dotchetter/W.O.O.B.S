@@ -52,3 +52,18 @@ void DS18B20::SetAsInput()
     }
 }
 
+
+void DS18B20::SetAsOutput()
+/*
+* Configure the pin where the sensor is
+* plugged in as output - a part of the
+* means of communication over onewire.
+*/
+{
+    switch(this->portGroup)
+    {
+        case 0: REG_PORT_DIR0 = this->pinMask; break;
+        case 1: REG_PORT_DIR1 = this->pinMask; break;
+    }
+}
+
