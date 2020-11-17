@@ -1,17 +1,15 @@
-#include "include/port.h"
+#include "DS18B20.h"
 
+DS18B20 *tempSensor = new DS18B20(0, PORT_PA16); // (Port group, port mask)
 
 void setup() 
 {
     Serial.begin(9600);
-    // Uncomment this function if you wish to attach function dummy when RTC wakes up the chip
-    // LowPower.attachInterruptWakeup(RTC_ALARM_WAKEUP, dummy, CHANGE);
-    //wifi_init();
 }
 
 
 void loop() 
 {
-    Serial.println(REG_PORT_DIR0);
-    delay(3000);  
+    Serial.print(tempSensor->GetTemperature('C'));
+    Serial.print(" C\r\n");
 }
