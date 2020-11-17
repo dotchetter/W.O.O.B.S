@@ -1,37 +1,20 @@
-#include <ArduinoLowPower.h>
 
+#include "JsonConverter.h"
 
+#define MESSAGE_MAX_LEN 256
+#define DEVICE_ID  "W.O.O.B.S"
+String JsonMessage;
 
 void setup() {
-    Serial.begin(9600);
-    pinMode(9, OUTPUT);
-  
-    LowPower.attachInterruptWakeup(RTC_ALARM_WAKEUP, dummy, CHANGE);
-}
 
+  Serial.begin(9600);
 
-void loop() { 
+static int messageCount = 1;
 
+void loop() {
 
-     Serial.begin(9600); 
-   
-   //  USBDevice.detach();
+ JsonMessage = ConvertToJson(messageCount);
 
-    delay(10);
-    Serial.println("vaknade precis loop");
-    Serial.flush();
-    delay(500);
-  digitalWrite(9, HIGH);
-  delay(500);
-  digitalWrite(9, LOW);
-  delay(500);
-            
-  LowPower.sleep(8000);
-    
-//USBDevice.attach();
- delay(1000); 
- 
-}
-void dummy() {
-  
+  Serial.println(JsonMessage);
+  messageCount++;        
 }
