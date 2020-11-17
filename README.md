@@ -1,16 +1,16 @@
 # W.O.O.B.S
 Water Oberservation Omtizing Boyant System
 
-# What is it?
+#### What is it?
 This is a product in a college collag designed to collect data about a
 swimming pool, and send it to a server over HTTP. 
 
-# Why? 
+#### Why? 
 It started out as an idea for my old man who's constantly getting down
 to check the temperature in the pool. "There's an app for that". And if
 there weren't already, we like to think that this is the solution to the problem. 
 
-# Cool. What hardware? 
+#### Cool. What hardware? 
 We use the E201C-Blue PH sensor to monitor the PH of the water. 
 For temperature, we use the DS18B20 onewire sensor. Both drivers are
 developed 100% in house without 3rd party software (exception for Microhip port defines for the MCU).
