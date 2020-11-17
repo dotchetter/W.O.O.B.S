@@ -117,3 +117,12 @@ void DS18B20::InitCommand()
     this->BusWrite(0);
 }
 
+
+void DS18B20::SuspendMicroSeconds(uint32_t microSeconds)
+/*
+* Allows the caller to return n cycles to sleep for
+* desired amount of microseconds.
+*/
+{
+    for (uint64_t i = 0; i < this->_us_to_cycles(microSeconds); i++) {asm("nop");}
+}
