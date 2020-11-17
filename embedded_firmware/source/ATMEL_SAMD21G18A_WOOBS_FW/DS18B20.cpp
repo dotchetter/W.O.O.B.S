@@ -173,3 +173,36 @@ void DS18B20::SendByteCommand(uint8_t command)
         }
     }    
 }
+
+
+uint8_t DS18B20::ReadScratchPad()
+/*
+* Read one byte of data from the sensor.
+* The size of a byte is iterated over, and
+* ultimately concatenates a byte from the 
+* sensor received over one wire.
+*/
+{
+    uint8_t result;
+
+    for (int i = 0; i < BITS_IN_BYTE; i++)
+    {
+        this->InitCommand();
+        this->SetAsInput();
+        this->SuspendMicroSeconds(PRECEDENCE_DETECT_HIGH_US);
+
+        /* If the received bit is 1, it is set in the result, otherwise cleared.*/
+        if (this->BusRead())
+        {
+            result |= (1 << i);
+        }
+        else
+        {
+            result &= ~(1 << i);
+        }
+
+        /* The time slot for this transition must exhaust - suspend execution. */
+        this->SuspendMicroSeconds(TIME_SLOT_US);
+    }
+    return result;
+}
