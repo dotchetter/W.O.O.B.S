@@ -36,7 +36,7 @@ void setup() {
 }
 
 void loop() {
-  if (client.connect(server, port)) {
+  /*if (client.connect(server, port)) {
 
   HTTPpost();
   int statusCode = httpClient.responseStatusCode();
@@ -51,5 +51,9 @@ void loop() {
     // if you didn't get a connection to the server:
     Serial.println("connection failed");
   }
-   delay(3000); // Wait for 3 seconds to post again
+   delay(3000); // Wait for 3 seconds to post again*/
+
+
+  delay(10000);
+ printData();
 }

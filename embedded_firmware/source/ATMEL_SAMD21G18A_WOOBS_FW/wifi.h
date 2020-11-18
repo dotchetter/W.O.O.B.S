@@ -23,7 +23,7 @@ void printData() {
 
 void wifiInit(){
   // attempt to connect to Wifi network:
-  while (status != WL_CONNECTED) {
+   while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to network: ");
     Serial.println(ssid);
     // Connect to WPA/WPA2 network:
@@ -31,12 +31,14 @@ void wifiInit(){
 
     // wait 10 seconds for connection:
     delay(10000);
-      // you're connected now, so print out the data:
-  Serial.println("You're connected to the network");
+  }
 
+  // you're connected now, so print out the data:
+  Serial.println("You're connected to the network");
+  
   Serial.println("----------------------------------------");
   printData();
   Serial.println("----------------------------------------");
-
-  }
 }
+
+  
