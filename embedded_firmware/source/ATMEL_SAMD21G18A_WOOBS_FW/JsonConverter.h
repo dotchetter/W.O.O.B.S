@@ -1,39 +1,19 @@
 
-#include <ArduinoJson.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-
-#define MESSAGE_MAX_LEN 256
 #define DEVICE_ID  "W.O.O.B.S"
 
-String ConvertToJson(int messageId)
+String ConvertToJson(int messageId, char* buffer)
 {
    
+    char  deviceID[200] = DEVICE_ID; 
+    float tempValue = 23.23;
+    float phValue = 7.23;
 
-    float temperature = 32.4;//readTemperature();
-    float PHValue = 8.2; //readPH();
 
+    sprintf (buffer, "[{\"DeviceId\": %s },{\"MessageId\": %d },{\"PH\": %.2f },{\"temp\" : %.2f}]", deviceID,messageId, tempValue, phValue);
 
-
-    StaticJsonDocument<MESSAGE_MAX_LEN> doc;
-
-   
-    
-     doc["deviceId"] = DEVICE_ID;
-     doc["messageId"] = messageId;
-
-    // NAN is not the valid json, change it to NULL
-
-     doc["temperature"] = temperature;
-    
-    
-
-     doc["PHValue"] = PHValue;
-
-     String output;
-
-      //serializeJson(doc, output);
-     serializeJsonPretty(doc,  output);
-
-      return output;
 
 }
