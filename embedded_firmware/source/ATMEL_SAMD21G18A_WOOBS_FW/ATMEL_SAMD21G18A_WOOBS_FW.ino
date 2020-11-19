@@ -6,8 +6,6 @@
 #include "JsonConverter.h"
 #include <StateMachine.h>
 
-#define DEVICE_ID  "W.O.O.B.S"
-
 char JsonMessage[200];
 
 // Heap allocated globally accessible instances (Singletons)
