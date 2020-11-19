@@ -31,7 +31,7 @@ void loop()
     Serial.print(tempSensor->GetTemperature('C'));
     Serial.print(" C\r\n");
 
- 	ConvertToJson(JsonMessage);
+ 	ConvertToJson(JsonMessage, tempSensor->GetTemperature('C'), phsensor->GetSensorPH());
 
 	Serial.print(JsonMessage);
 	Serial.println();
