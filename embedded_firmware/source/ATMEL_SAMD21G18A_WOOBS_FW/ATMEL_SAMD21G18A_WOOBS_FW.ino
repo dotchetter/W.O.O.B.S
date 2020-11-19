@@ -1,29 +1,42 @@
-#include "DS18B20.h"
-#include "E201CBlue.h"
-#include "SAMD21_ADC.h"
-#include "definitions.h"
-#include <StateMachine.h>
+float voltage;
+float perc;
+int value;
 
-// Heap allocated globally accessible instances (Singletons)
-E201C *phsensor = new E201C(REF_VOLTAGE, ADC_MAX_VAL_REF, PH_REF_1, PH_REF_2, PH_SENSOR_CHANNEL);
-DS18B20 *tempSensor = new DS18B20(0, PORT_PA16); // (Port group, port mask)
 
-void setup() 
+void setup()
 {
-    init_adc();
-    Serial.begin(115200);
+	Serial.begin(9600);
+	pinMode(7, OUTPUT); 
 }
 
 void loop() 
 {
-    Serial.print("PH: ");
-    Serial.println(phsensor->GetSensorPH());
+	digitalWrite(7, HIGH);
+	value = analogRead(ADC_BATTERY); //* 3.3f / 1023.0f/1.2f * (1.2f+ 0.33f);
+	voltage = value * (3.3/1023.0f);
+	perc = map(voltage, 3.0, 3.7, 100, 0);
+	Serial.print("Voltage= ");
+	Serial.println(voltage);
+	Serial.print("Battery level= ");
+	Serial.print(perc);
+	Serial.println(" %");
+	delay(500);
 
-    Serial.print("Voltage: ");
-    Serial.println(phsensor->GetSensorVoltage());
-
-    Serial.print(tempSensor->GetTemperature('C'));
-    Serial.print(" C\r\n");
-
-    delay(1000);
+	if (voltage < 3.20)
+	{
+		digitalWrite(7, LOW);
+		delay(1000);
+		digitalWrite(7, HIGH);
+		delay(1000);
+	}
+	
+	if (voltage < 3.0)
+	{
+	    digitalWrite(7, LOW);
+	    delay(500);
+	    digitalWrite(7, HIGH);
+	    delay(500);
+	}
+	Serial.println(perc);
 }
+
