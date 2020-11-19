@@ -7,7 +7,7 @@
 
 void ConvertToJson(int messageId, char* buffer)
 {
-    char  deviceID[200] = DEVICE_ID; 
+    char  deviceID[200] = DEVICE_ID;
     float tempValue = 23.23;
     float phValue = 7.23;
 
@@ -16,8 +16,7 @@ void ConvertToJson(int messageId, char* buffer)
    
     dtostrf(tempValue, 4, 2, temp); // floatValue copied into temp[] because sprintf doesnt support float
     dtostrf(phValue, 4, 2, ph);
-
-    sprintf (buffer, "[{\"DeviceId\": %s,\"MessageId\": %d ,\"PH\": %s ,\"temp\" : %s}]", deviceID, messageId, temp, ph);
+    sprintf(buffer, "{\"DeviceId\": %s, \"PH\": %s ,\"temp\" : %s}", deviceID, temp, ph);
 
 }
 
