@@ -5,18 +5,17 @@
 
 #define DEVICE_ID "devtest"
 
-void ConvertToJson(char* buffer)
+void ConvertToJson(char* buffer, float tempValue, float phValue)
+/*
+* Formats the incoming values in to a valid
+* flat JSON string.
+*/
 {
-    char  deviceID[200] = DEVICE_ID;
-    float tempValue = 23.23;
-    float phValue = 7.23;
-
+    char device_id[200] = DEVICE_ID;
     char temp[6];
     char ph[6];
    
     dtostrf(tempValue, 4, 2, temp); // floatValue copied into temp[] because sprintf doesnt support float
     dtostrf(phValue, 4, 2, ph);
-    sprintf(buffer, "{\"DeviceId\": %s, \"PH\": %s ,\"temp\" : %s}", deviceID, temp, ph);
-
+    sprintf(buffer, "{\"device_id\": %s, \"ph\": %s ,\"temp\" : %s}", device_id, temp, ph);
 }
-
