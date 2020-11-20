@@ -34,7 +34,7 @@ void SendTelemetryData()
     DynamicJsonDocument doc(1024);
     doc["ph"] = phsensor->GetSensorPH();
     doc["temp"] = tempSensor->GetTemperature('C');
-    doc["device_id"] = "DEVICE_ID";
+    doc["device_id"] = DEVICE_ID;
     
     char JSONmessageBuffer[300];
 

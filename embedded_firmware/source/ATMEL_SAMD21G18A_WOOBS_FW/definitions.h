@@ -36,10 +36,10 @@
 #define API_URL              "woobsapi.herokuapp.com"
 #define API_PATH             "/reading/"
 
-#define SSID                 ""
-#define PASS                 ""
+#define SSID                 "devices"
+#define PASS                 "00000000"
 #define TSL_PORT             443
 #define DEVICE_ID            "w.o.o.b.s-acd342-5j39sh32"
-#define STDBY_TIME_MS        10000
+#define STDBY_TIME_MS        5000
 
 #endif // DEFINITIONS_H_
