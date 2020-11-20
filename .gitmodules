@@ -1,3 +1,4 @@
+
 [submodule "embedded_firmware/source/ATMEL_SAMD21G18A_WOOBS_FW/include/StateMachineEmbedded"]
 	path = embedded_firmware/source/ATMEL_SAMD21G18A_WOOBS_FW/include/StateMachineEmbedded
 	url = https://github.com/dotchetter/StateMachineEmbedded.git

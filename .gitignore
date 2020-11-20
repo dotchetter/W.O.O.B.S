@@ -1,12 +1,4 @@
-
-# Atmel studio metadata
 .vs
-
-#Pycharm
-.idea
-__pycache__
-
-# Ignore buildfiles
 embedded_firmware\source\ATMEL_SAMD21G18A_WOOBS_FW\Debug\*
 embedded_firmware\source\ATMEL_SAMD21G18A_WOOBS_FW\*.componentinfo*
 
