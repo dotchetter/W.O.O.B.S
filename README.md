@@ -17,3 +17,8 @@ developed 100% in house without 3rd party software (exception for Microhip port 
 beast that provides us with great flexibility in memory and headroom with processing
 capabilities. It's all tied up nicely with the ESP32 module for connectivity on
 the Arduino MKR 1010 WiFi board.
+
+#### Open source notice
+* WifiNINA - Creative Commons Attribution-ShareAlike 3.0
+* ArduinoHttpClient (No license available)
+* SAMD21 board code from MicroChip, "sam.h" - Copyright (c) 2015, Atmel Corporation
