@@ -47,8 +47,8 @@ void DS18B20::SetAsInput()
 {
     switch(this->portGroup)
     {
-        case 0: REG_PORT_DIRCLR0 = this->pinMask; break;
-        case 1: REG_PORT_DIRCLR1 = this->pinMask; break;
+        case 0: REG_PORT_DIR0 &= ~(this->pinMask); break;
+        case 1: REG_PORT_DIR1 &= ~(this->pinMask); break;
     }
 }
 
@@ -62,8 +62,8 @@ void DS18B20::SetAsOutput()
 {
     switch(this->portGroup)
     {
-        case 0: REG_PORT_DIR0 = this->pinMask; break;
-        case 1: REG_PORT_DIR1 = this->pinMask; break;
+        case 0: REG_PORT_DIR0 |= this->pinMask; break;
+        case 1: REG_PORT_DIR1 |= this->pinMask; break;
     }
 }
 
@@ -124,7 +124,7 @@ void DS18B20::SuspendMicroSeconds(uint32_t microSeconds)
 * desired amount of microseconds.
 */
 {
-    for (uint64_t i = 0; i < this->_us_to_cycles(microSeconds); i++) {asm("nop");}
+    for (uint64_t i = 0; i < this->_us_to_cycles(microSeconds); i++) {asm("nop\r\n");}
 }
 
 
